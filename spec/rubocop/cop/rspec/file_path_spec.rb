@@ -78,6 +78,12 @@ RSpec.describe RuboCop::Cop::RSpec::FilePath, :config do
     RUBY
   end
 
+  it 'ignores extra junk at the end' do
+    expect_no_offenses(<<-RUBY, 'some/class_spec.rb.this.is.a.ridiculous.extension')
+      describe Some::Class do; end
+    RUBY
+  end
+
   it 'allows different parent directories' do
     expect_no_offenses(<<-RUBY, 'parent_dir/some/class_spec.rb')
       describe Some::Class do; end
@@ -170,6 +176,13 @@ RSpec.describe RuboCop::Cop::RSpec::FilePath, :config do
     expect_no_offenses(<<-RUBY, filename)
       describe MyLittleClass, '#<=>' do; end
     RUBY
+  end
+
+  describe 'testing implementation functions' do
+    let(:args) {
+      dcdouble =  double('Mock Described Class')
+      allow()
+    }
   end
 
   context 'when configured with CustomTransform' do
